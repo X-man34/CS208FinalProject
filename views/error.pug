@@ -10,9 +10,7 @@ block content
             h1.error-code 404
             .accent-line
             h2.error-title Oops. This page got eaten.
-            p.error-copy
-              | Looks like someone took a bite out of this page. Let's get you back
-              |  to something fresh and warm.
+            p.error-copy This page is not here. Head back to something fresh.
             .button-row
               a.button.button--primary(href='/') Back to Home
               a.button.button--secondary(href='/menu') View Menu
@@ -27,13 +25,13 @@ block content
         .error-support
           article.support-item
             h3 Visit in-store
-            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+            p Lorem ipsum dolor sit amet.
           article.support-item
             h3 Find something sweet
-            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+            p Lorem ipsum dolor sit amet.
           article.support-item
             h3 Need a fallback?
-            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+            p Lorem ipsum dolor sit amet.
   else
     section.page-section
       .container.container--narrow
@@ -41,8 +39,6 @@ block content
           p.eyebrow Something went wrong
           h1 We hit an unexpected snag.
         .message-card
-          p.message-card__lead
-            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Please try
-            |  again in a moment.
+          p.message-card__lead Lorem ipsum dolor sit amet. Please try again.
           if error && error.stack
             pre.error-stack= error.stack

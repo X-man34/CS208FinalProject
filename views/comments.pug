@@ -5,19 +5,15 @@ block content
     .container.container--narrow
       p.eyebrow Customer Comments
       h1 A welcoming space for feedback and regulars.
-      p.page-hero__lede
-        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-        |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      p.page-hero__lede Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
   section.page-section
     .container.comments-layout
       .comments-layout__form
         .section-heading.section-heading--left
-          p.eyebrow Phase 1 Preview
-          h2 Comment form shell
-          p.section-heading__copy
-            | This form is styled and accessible in Phase 1. Live saving arrives
-            |  in Phase 3.
+          p.eyebrow Leave a note
+          h2 Share a quick comment
+          p.section-heading__copy Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         if notice
           .notice-banner(role='status')= notice
         form.comment-form(method='post', action='/comments')
@@ -26,12 +22,12 @@ block content
             input#display_name(type='text', name='display_name', maxlength='80', placeholder='Jordan from downtown')
           .form-field
             label(for='body') Comment
-            textarea#body(name='body', rows='6', maxlength='1000', placeholder='Share a quick note about the vibe, service, or favorite order.')
-          button.button.button--primary(type='submit') Preview Submission
+            textarea#body(name='body', rows='5', maxlength='1000', placeholder='Share a quick note.')
+          button.button.button--primary(type='submit') Send Comment
       .comments-layout__list
         .section-heading.section-heading--left
-          p.eyebrow Preview Feed
-          h2 Comment list shell
+          p.eyebrow Recent notes
+          h2 Customer comments
         .stack
           each comment in comments
             article.comment-card

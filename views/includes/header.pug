@@ -9,7 +9,7 @@ header.site-header
         each link in navLinks
           li
             a(class=currentPath === link.href ? 'is-active' : '', href=link.href)= link.label
-    a.button.button--primary.button--pill.site-header__order(href=orderUrl target='_blank' rel='noreferrer') Order Online
+    a.button.button--primary.site-header__order(href=orderUrl target='_blank' rel='noreferrer') Order Online
     details.mobile-nav
       summary.mobile-nav__toggle Menu
       nav.mobile-nav__panel(aria-label='Mobile')

@@ -15,49 +15,49 @@ const featuredItems = [
   {
     title: 'Maple Morning',
     tag: 'Signature Donut',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.',
-    accent: 'Buttery glaze, warm spice, and a soft maple finish.'
+    description: 'Lorem ipsum dolor sit amet.',
+    accent: 'Buttery glaze and warm spice.'
   },
   {
     title: 'Vanilla Cloud',
     tag: 'Coffee Pairing',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.',
-    accent: 'Built to sit beside a slow morning latte and easy conversation.'
+    description: 'Lorem ipsum dolor sit amet.',
+    accent: 'Made for a slow latte break.'
   },
   {
     title: 'Cinnamon Window',
     tag: 'Fresh Favorite',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.',
-    accent: 'A lighter, brighter profile for the front case and weekend rush.'
+    description: 'Lorem ipsum dolor sit amet.',
+    accent: 'Bright, soft, and easy to grab.'
   }
 ];
 
 const menuSections = [
   {
     title: 'Donuts',
-    intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
+    intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     items: [
-      { name: 'Classic Glazed', detail: 'Lorem ipsum dolor sit amet consectetur.' },
-      { name: 'Berry Sprinkle', detail: 'Lorem ipsum dolor sit amet consectetur.' },
-      { name: 'Espresso Twist', detail: 'Lorem ipsum dolor sit amet consectetur.' }
+      { name: 'Classic Glazed', detail: 'Lorem ipsum dolor sit amet.' },
+      { name: 'Berry Sprinkle', detail: 'Lorem ipsum dolor sit amet.' },
+      { name: 'Espresso Twist', detail: 'Lorem ipsum dolor sit amet.' }
     ]
   },
   {
     title: 'Coffee',
-    intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
+    intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     items: [
-      { name: 'House Roast', detail: 'Lorem ipsum dolor sit amet consectetur.' },
-      { name: 'Honey Latte', detail: 'Lorem ipsum dolor sit amet consectetur.' },
-      { name: 'Cold Brew', detail: 'Lorem ipsum dolor sit amet consectetur.' }
+      { name: 'House Roast', detail: 'Lorem ipsum dolor sit amet.' },
+      { name: 'Honey Latte', detail: 'Lorem ipsum dolor sit amet.' },
+      { name: 'Cold Brew', detail: 'Lorem ipsum dolor sit amet.' }
     ]
   },
   {
     title: 'Featured',
-    intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
+    intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     items: [
-      { name: 'Weekend Box', detail: 'Lorem ipsum dolor sit amet consectetur.' },
-      { name: 'Downtown Dozen', detail: 'Lorem ipsum dolor sit amet consectetur.' },
-      { name: 'Office Coffee Run', detail: 'Lorem ipsum dolor sit amet consectetur.' }
+      { name: 'Weekend Box', detail: 'Lorem ipsum dolor sit amet.' },
+      { name: 'Downtown Dozen', detail: 'Lorem ipsum dolor sit amet.' },
+      { name: 'Office Coffee Run', detail: 'Lorem ipsum dolor sit amet.' }
     ]
   }
 ];
@@ -66,32 +66,32 @@ const storyMilestones = [
   {
     year: '1992',
     title: 'Neighborhood Roots',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     year: '2008',
     title: 'Morning Ritual',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     year: 'Today',
     title: 'Fresh Chapter',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   }
 ];
 
 const values = [
   {
     title: 'Warm Service',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     title: 'Fresh Batches',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     title: 'Community Table',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   }
 ];
 
@@ -99,12 +99,12 @@ const placeholderComments = [
   {
     name: 'Morning Regular',
     date: 'April 18, 2026',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.'
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   },
   {
     name: 'Weekend Walker',
     date: 'April 11, 2026',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis.'
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
   }
 ];
 
@@ -147,7 +147,7 @@ router.get('/about', function (req, res) {
 
 router.get('/comments', function (req, res) {
   const notice = req.query.notice === 'preview'
-    ? 'Comment posting is in preview mode during Phase 1. Your message was not saved yet.'
+    ? 'Comments are not saved yet.'
     : '';
 
   renderPage(res, 'comments', {
