@@ -12,15 +12,33 @@ block content
         a.button.button--primary(href=orderUrl target='_blank' rel='noreferrer') Order Online
         a.button.button--secondary(href='/comments') Read Comments
 
+  section.page-section
+    .container
+      .menu-intro-grid
+        article.message-card
+          p.eyebrow How To Browse
+          h2 Built like a storefront, not a PDF dump.
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        article.message-card
+          p.eyebrow Quick Picks
+          h2 Donuts, coffee, and flexible ordering.
+          p
+            | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            |  nisi ut aliquip ex ea commodo consequat.
+
   each sectionData in menuSections
     section.page-section
       .container
-        .section-heading.section-heading--left
-          p.eyebrow= sectionData.title
-          h2= sectionData.title + ' offerings'
-          p.section-heading__copy= sectionData.intro
-        .card-grid.card-grid--three
-          each item in sectionData.items
-            article.card
-              h3= item.name
-              p= item.detail
+        .menu-section
+          .section-heading.section-heading--left
+            p.eyebrow= sectionData.title
+            h2= sectionData.title + ' offerings'
+            p.section-heading__copy= sectionData.intro
+          .card-grid.card-grid--three
+            each item in sectionData.items
+              article.card.card--menu
+                h3= item.name
+                p= item.detail
+                a.inline-link(href=orderUrl target='_blank' rel='noreferrer') Ordering placeholder

@@ -15,17 +15,20 @@ const featuredItems = [
   {
     title: 'Maple Morning',
     tag: 'Signature Donut',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.',
+    accent: 'Buttery glaze, warm spice, and a soft maple finish.'
   },
   {
     title: 'Vanilla Cloud',
     tag: 'Coffee Pairing',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.',
+    accent: 'Built to sit beside a slow morning latte and easy conversation.'
   },
   {
     title: 'Cinnamon Window',
     tag: 'Fresh Favorite',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.'
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.',
+    accent: 'A lighter, brighter profile for the front case and weekend rush.'
   }
 ];
 

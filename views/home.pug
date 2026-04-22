@@ -9,6 +9,10 @@ block content
         p.hero__lede
           | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        p.hero__subcopy
+          | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          |  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          |  reprehenderit in voluptate velit esse cillum dolore.
         .button-row
           a.button.button--primary(href='/menu') Explore the Menu
           a.button.button--secondary(href='/about') Our Story
@@ -29,21 +33,33 @@ block content
           | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
           |  eiusmod tempor incididunt.
         .hero__card-divider
+        dl.hero__highlights
+          div
+            dt Fresh Case
+            dd Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+          div
+            dt Coffee Window
+            dd Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
         p.hero__card-note
-          | Order links are placeholders in Phase 1, but the experience is
-          |  designed to feel client-ready.
+          | Order links remain placeholder-only, but the page structure now
+          |  reflects the final client-facing direction.
 
   section.page-section
     .container
-      .section-heading
-        p.eyebrow Fresh from the case
-        h2 A menu preview with room to grow.
-      .card-grid.card-grid--three
-        each item in featuredItems
-          article.card
-            p.card__tag= item.tag
-            h3= item.title
-            p= item.description
+      .feature-band
+        .section-heading.section-heading--left
+          p.eyebrow Fresh from the case
+          h2 A menu preview with stronger hierarchy.
+          p.section-heading__copy
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+            |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .card-grid.card-grid--three
+          each item in featuredItems
+            article.card.card--feature
+              p.card__tag= item.tag
+              h3= item.title
+              p= item.description
+              p.card__accent= item.accent
 
   section.page-section.page-section--accent
     .container.story-split
@@ -57,6 +73,13 @@ block content
         p
           | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
           |  nisi ut aliquip ex ea commodo consequat.
+        .story-points
+          article.story-point
+            h3 Morning routine
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
+          article.story-point
+            h3 Counter energy
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.
       aside.quote-card
         p.quote-card__script Downtown Donuts
         p.quote-card__text
@@ -64,13 +87,14 @@ block content
           |  eiusmod tempor incididunt ut labore.
 
   section.page-section
-    .container.cta-banner
-      .cta-banner__content
-        p.eyebrow Ready when you are
-        h2 Plan your next coffee and donut run.
-        p
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
-          |  eiusmod tempor incididunt ut labore.
-      .button-row
-        a.button.button--primary(href='/comments') Read Customer Comments
-        a.button.button--secondary(href=orderUrl target='_blank' rel='noreferrer') Open Order Link
+    .container
+      .cta-banner
+        .cta-banner__content
+          p.eyebrow Ready when you are
+          h2 Plan your next coffee and donut run.
+          p
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+            |  eiusmod tempor incididunt ut labore.
+        .button-row
+          a.button.button--primary(href='/comments') Read Customer Comments
+          a.button.button--secondary(href=orderUrl target='_blank' rel='noreferrer') Open Order Link

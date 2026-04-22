@@ -11,9 +11,9 @@
   --color-shadow: rgba(16, 41, 29, 0.12);
   --font-body: 'Montserrat', sans-serif;
   --font-script: 'Italianno', cursive;
-  --radius-sm: 1rem;
-  --radius-md: 1.75rem;
-  --radius-lg: 2.25rem;
+  --radius-sm: 0.4rem;
+  --radius-md: 0.7rem;
+  --radius-lg: 1rem;
   --container: 74rem;
   --container-narrow: 52rem;
   --transition: 180ms ease;
@@ -64,7 +64,7 @@ textarea {
   top: -4rem;
   z-index: 100;
   padding: 0.85rem 1.1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--color-saffron);
   color: var(--color-green);
   font-weight: 700;
@@ -192,7 +192,7 @@ textarea {
   min-height: 3.25rem;
   padding: 0.9rem 1.4rem;
   border: 2px solid transparent;
-  border-radius: 1rem;
+  border-radius: var(--radius-sm);
   font-weight: 700;
   transition:
     transform var(--transition),
@@ -219,7 +219,7 @@ textarea {
 }
 
 .button--pill {
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
 }
 
 .button--block {
@@ -244,7 +244,7 @@ textarea {
 .mobile-nav__panel {
   margin-top: 0.75rem;
   padding: 1rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: rgba(247, 247, 247, 0.08);
 }
 
@@ -340,6 +340,11 @@ textarea {
   color: #314139;
 }
 
+.hero__subcopy,
+.card__accent {
+  color: #314139;
+}
+
 .eyebrow,
 .hero__card-label,
 .card__tag,
@@ -401,6 +406,29 @@ textarea {
   color: var(--color-green);
 }
 
+.hero__highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.hero__highlights div {
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.hero__highlights dt {
+  margin: 0 0 0.2rem;
+  font-weight: 700;
+  color: var(--color-green);
+}
+
+.hero__highlights dd {
+  margin: 0;
+  color: #314139;
+}
+
 .hero__card-divider,
 .accent-line {
   width: 100%;
@@ -444,6 +472,13 @@ textarea {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.card--feature,
+.card--menu {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+}
+
 .card h3,
 .comment-card h3,
 .timeline__item h3,
@@ -455,6 +490,27 @@ textarea {
 .story-split {
   grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
   align-items: start;
+}
+
+.story-points,
+.menu-intro-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.story-points {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1.5rem;
+}
+
+.story-point {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.story-point h3 {
+  margin: 0 0 0.4rem;
+  color: var(--color-green);
 }
 
 .quote-card,
@@ -476,6 +532,15 @@ textarea {
 .timeline {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.menu-intro-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.menu-section {
+  display: grid;
   gap: 1.25rem;
 }
 
@@ -505,7 +570,7 @@ textarea {
   width: 100%;
   padding: 0.9rem 1rem;
   border: 1px solid rgba(16, 41, 29, 0.2);
-  border-radius: 1rem;
+  border-radius: var(--radius-sm);
   background: var(--color-white);
   color: var(--color-black);
 }
@@ -516,7 +581,7 @@ textarea {
 
 .notice-banner {
   padding: 0.95rem 1rem;
-  border-radius: 1rem;
+  border-radius: var(--radius-sm);
   background: rgba(247, 198, 74, 0.2);
   color: var(--color-green);
   font-weight: 600;
@@ -610,7 +675,7 @@ textarea {
 .error-stack {
   overflow-x: auto;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: var(--radius-sm);
   background: rgba(16, 41, 29, 0.08);
 }
 
@@ -635,7 +700,10 @@ textarea {
   .site-footer__grid,
   .timeline,
   .error-support,
-  .card-grid--three {
+  .card-grid--three,
+  .menu-intro-grid,
+  .story-points,
+  .hero__highlights {
     grid-template-columns: 1fr;
   }
 }
