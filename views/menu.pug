@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  section.page-hero
+    .container.container--narrow
+      p.eyebrow Downtown Donuts Menu
+      h1 A warm menu built for easy scanning.
+      p.page-hero__lede
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      .button-row
+        a.button.button--primary(href=orderUrl target='_blank' rel='noreferrer') Order Online
+        a.button.button--secondary(href='/comments') Read Comments
+
+  each sectionData in menuSections
+    section.page-section
+      .container
+        .section-heading.section-heading--left
+          p.eyebrow= sectionData.title
+          h2= sectionData.title + ' offerings'
+          p.section-heading__copy= sectionData.intro
+        .card-grid.card-grid--three
+          each item in sectionData.items
+            article.card
+              h3= item.name
+              p= item.detail

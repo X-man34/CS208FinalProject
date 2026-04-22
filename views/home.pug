@@ -1,0 +1,76 @@
+extends layout
+
+block content
+  section.hero
+    .container.hero__grid
+      .hero__content
+        p.eyebrow Cozy, minimal, modern
+        h1 Fresh donuts, warm coffee, and a downtown rhythm.
+        p.hero__lede
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .button-row
+          a.button.button--primary(href='/menu') Explore the Menu
+          a.button.button--secondary(href='/about') Our Story
+        ul.hero__stats
+          li
+            strong 1992
+            span Family-owned since day one
+          li
+            strong Daily
+            span Small-batch donuts and coffee
+          li
+            strong Downtown
+            span A cozy stop for morning regulars
+      .hero__card
+        p.hero__card-label Featured Pairing
+        h2 Maple Morning + House Roast
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+          |  eiusmod tempor incididunt.
+        .hero__card-divider
+        p.hero__card-note
+          | Order links are placeholders in Phase 1, but the experience is
+          |  designed to feel client-ready.
+
+  section.page-section
+    .container
+      .section-heading
+        p.eyebrow Fresh from the case
+        h2 A menu preview with room to grow.
+      .card-grid.card-grid--three
+        each item in featuredItems
+          article.card
+            p.card__tag= item.tag
+            h3= item.title
+            p= item.description
+
+  section.page-section.page-section--accent
+    .container.story-split
+      .story-split__content
+        .section-heading.section-heading--left
+          p.eyebrow A familiar corner
+          h2 A small shop with a big morning presence.
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        p
+          | Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          |  nisi ut aliquip ex ea commodo consequat.
+      aside.quote-card
+        p.quote-card__script Downtown Donuts
+        p.quote-card__text
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+          |  eiusmod tempor incididunt ut labore.
+
+  section.page-section
+    .container.cta-banner
+      .cta-banner__content
+        p.eyebrow Ready when you are
+        h2 Plan your next coffee and donut run.
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+          |  eiusmod tempor incididunt ut labore.
+      .button-row
+        a.button.button--primary(href='/comments') Read Customer Comments
+        a.button.button--secondary(href=orderUrl target='_blank' rel='noreferrer') Open Order Link

@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  section.page-hero
+    .container.container--narrow
+      p.eyebrow About Downtown Donuts
+      h1 A family-owned shop shaped by daily ritual.
+      p.page-hero__lede
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+  section.page-section
+    .container.story-split
+      .story-split__content
+        .section-heading.section-heading--left
+          p.eyebrow Since 1992
+          h2 Built to feel welcoming from the first visit.
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        p
+          | Duis aute irure dolor in reprehenderit in voluptate velit esse
+          |  cillum dolore eu fugiat nulla pariatur.
+      aside.message-card
+        h3 Morning to midday
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do
+          |  eiusmod tempor incididunt ut labore.
+
+  section.page-section.page-section--accent
+    .container
+      .section-heading
+        p.eyebrow Timeline
+        h2 The shape of the story so far.
+      .timeline
+        each milestone in storyMilestones
+          article.timeline__item
+            p.timeline__year= milestone.year
+            h3= milestone.title
+            p= milestone.description
+
+  section.page-section
+    .container
+      .section-heading
+        p.eyebrow Values
+        h2 What the brand should feel like online.
+      .card-grid.card-grid--three
+        each value in values
+          article.card
+            h3= value.title
+            p= value.description

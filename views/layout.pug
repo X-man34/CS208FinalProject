@@ -1,7 +1,10 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+html(lang='en')
+  include includes/head
   body
-    block content
+    a.skip-link(href='#main-content') Skip to content
+    .site-shell
+      include includes/header
+      main#main-content.site-main
+        block content
+      include includes/footer

@@ -1,0 +1,20 @@
+header.site-header
+  .container.site-header__inner
+    a.brand(href='/' aria-label='Downtown Donuts home')
+      span.brand__eyebrow Since 1992
+      span.brand__script Downtown Donuts
+      span.brand__sub Cozy donuts and coffee downtown
+    nav.site-nav(aria-label='Primary')
+      ul.site-nav__list
+        each link in navLinks
+          li
+            a(class=currentPath === link.href ? 'is-active' : '', href=link.href)= link.label
+    a.button.button--primary.button--pill.site-header__order(href=orderUrl target='_blank' rel='noreferrer') Order Online
+    details.mobile-nav
+      summary.mobile-nav__toggle Menu
+      nav.mobile-nav__panel(aria-label='Mobile')
+        ul.mobile-nav__list
+          each link in navLinks
+            li
+              a(class=currentPath === link.href ? 'is-active' : '', href=link.href)= link.label
+        a.button.button--primary.button--block(href=orderUrl target='_blank' rel='noreferrer') Order Online

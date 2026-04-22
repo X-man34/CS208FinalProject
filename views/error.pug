@@ -1,6 +1,48 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  if statusCode === 404
+    section.error-hero
+      .container
+        .error-panel
+          .error-panel__copy
+            p.eyebrow Fresh route, wrong turn
+            h1.error-code 404
+            .accent-line
+            h2.error-title Oops. This page got eaten.
+            p.error-copy
+              | Looks like someone took a bite out of this page. Let's get you back
+              |  to something fresh and warm.
+            .button-row
+              a.button.button--primary(href='/') Back to Home
+              a.button.button--secondary(href='/menu') View Menu
+            p.error-note
+              | Still browsing? Visit the
+              a.inline-link(href='/about')  About page
+              |  or head over to
+              a.inline-link(href='/comments')  customer comments
+              | .
+          .error-panel__art
+            img.error-art(src='/images/404PageDonutAsset.png', alt='Illustration of a pink frosted donut with a bite taken out')
+        .error-support
+          article.support-item
+            h3 Visit in-store
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+          article.support-item
+            h3 Find something sweet
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+          article.support-item
+            h3 Need a fallback?
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.
+  else
+    section.page-section
+      .container.container--narrow
+        .section-heading
+          p.eyebrow Something went wrong
+          h1 We hit an unexpected snag.
+        .message-card
+          p.message-card__lead
+            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Please try
+            |  again in a moment.
+          if error && error.stack
+            pre.error-stack= error.stack

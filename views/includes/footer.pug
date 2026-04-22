@@ -1,0 +1,30 @@
+footer.site-footer
+  .container.site-footer__grid
+    section.site-footer__brand
+      p.eyebrow Downtown Donuts
+      p.site-footer__script Fresh comfort with a downtown rhythm.
+      p
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod
+        |  tempor incididunt ut labore.
+    section.site-footer__section
+      h2 Footer Menu
+      ul.footer-links
+        each link in navLinks
+          li
+            a(href=link.href)= link.label
+    section.site-footer__section
+      h2 Visit
+      p 123 Market Street
+      p Boise, Idaho 83702
+      p Mon-Sat | 6:00 AM to 2:00 PM
+    section.site-footer__section
+      h2 Order Links
+      ul.footer-links
+        li
+          a(href=orderUrl target='_blank' rel='noreferrer') Order Online
+        li
+          a(href='/menu') View the Menu
+        li
+          a(href='/comments') Read Comments
+  .container.site-footer__bar
+    p Copyright #{year} Downtown Donuts. Prototype site for CS208.

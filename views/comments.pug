@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  section.page-hero
+    .container.container--narrow
+      p.eyebrow Customer Comments
+      h1 A welcoming space for feedback and regulars.
+      p.page-hero__lede
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        |  eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+  section.page-section
+    .container.comments-layout
+      .comments-layout__form
+        .section-heading.section-heading--left
+          p.eyebrow Phase 1 Preview
+          h2 Comment form shell
+          p.section-heading__copy
+            | This form is styled and accessible in Phase 1. Live saving arrives
+            |  in Phase 3.
+        if notice
+          .notice-banner(role='status')= notice
+        form.comment-form(method='post', action='/comments')
+          .form-field
+            label(for='display_name') Name
+            input#display_name(type='text', name='display_name', maxlength='80', placeholder='Jordan from downtown')
+          .form-field
+            label(for='body') Comment
+            textarea#body(name='body', rows='6', maxlength='1000', placeholder='Share a quick note about the vibe, service, or favorite order.')
+          button.button.button--primary(type='submit') Preview Submission
+      .comments-layout__list
+        .section-heading.section-heading--left
+          p.eyebrow Preview Feed
+          h2 Comment list shell
+        .stack
+          each comment in comments
+            article.comment-card
+              .comment-card__meta
+                h3= comment.name
+                p= comment.date
+              p= comment.body
