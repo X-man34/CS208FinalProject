@@ -24,8 +24,13 @@ block content
       aside.message-card
         h3 Morning to midday
         p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        .story-points
+          article.story-point
+            h3 Store Hours
+            p Mon-Sat | 6:00 AM to 2:00 PM
+            p Sunday | Closed
 
-  section.page-section.page-section--accent
+  section.page-section
     .container
       .section-heading
         p.eyebrow Timeline
@@ -40,8 +45,7 @@ block content
   section.page-section
     .container
       .section-heading
-        p.eyebrow Values
-        h2 What the brand should feel like online.
+        h2 Company Values
       .card-grid.card-grid--three
         each value in values
           article.card
@@ -54,7 +58,6 @@ block content
         .cta-banner__content
           p.eyebrow Keep exploring
           h2 See the menu or read what regulars have to say.
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         .button-row
           a.button.button--primary(href='/menu') Browse Menu
           a.button.button--secondary(href='/comments') View Comments

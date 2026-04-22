@@ -3,24 +3,13 @@ extends layout
 block content
   section.page-hero
     .container.container--narrow
-      p.eyebrow Downtown Donuts Menu
-      h1 A warm menu built for easy scanning.
+      h1 Downtown Donuts Menu
       p.page-hero__lede Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       .button-row
         a.button.button--primary(href=orderUrl target='_blank' rel='noreferrer') Order Online
         a.button.button--secondary(href='/comments') Read Comments
 
-  section.page-section
-    .container
-      .menu-intro-grid
-        article.message-card
-          p.eyebrow How To Browse
-          h2 Built like a storefront, not a PDF dump.
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        article.message-card
-          p.eyebrow Quick Picks
-          h2 Donuts, coffee, and flexible ordering.
-          p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
 
   each sectionData in menuSections
     section.page-section
