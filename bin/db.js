@@ -1,49 +1,42 @@
-// db.js
-const mysql = require('mysql2'); // Or your chosen database driver
+const mysql = require('mysql2/promise');
 
-let connection = null; // This variable is 'closed over'
+let pool = null;
 
 function createDbConnection() {
-    if (!connection) {
-        connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '12345',
-            database: 'cs208demo'
-        });
+  if (!pool) {
+    pool = mysql.createPool({
+      host: 'localhost',
+      user: 'root',
+      password: '12345',
+      database: 'cs208demo',
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
+    });
+  }
 
-        connection.connect(err => {
-            if (err) {
-                console.error('Error connecting to database:', err);
-                // Handle error appropriately, e.g., exit process
-            } else {
-                console.log('Database connected!');
-            }
-        });
-    }
-    console.log('Using existing database connection');
-    return connection;
+  return pool;
 }
 
-// Middleware to attach the connection to the request object
-function dbMiddleware(req, res, next) {
-    req.db = createDbConnection();
-    console.log(`DB middleware id: ${req.db.threadId}, called at: ${Date.now()}`);
-    next();
+async function query(sql, params = []) {
+  const db = createDbConnection();
+  const [rows] = await db.query(sql, params);
+  return rows;
 }
 
-// Function to close the connection (for graceful shutdown)
-function closeDbConnection() {
-    if (connection) {
-        connection.end(err => {
-            if (err) {
-                console.error('Error closing database connection:', err);
-            } else {
-                console.log('Database connection closed.');
-                connection = null; // Reset connection
-            }
-        });
-    }
+async function closeDbConnection() {
+  if (!pool) {
+    return;
+  }
+
+  try {
+    await pool.end();
+    console.log('Database connection closed.');
+  } catch (error) {
+    console.error('Error closing database connection:', error);
+  } finally {
+    pool = null;
+  }
 }
 
-module.exports = { dbMiddleware, createDbConnection, closeDbConnection };
+module.exports = { createDbConnection, query, closeDbConnection };

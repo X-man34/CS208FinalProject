@@ -15,23 +15,75 @@ block content
           h2 Share a quick comment
           p.section-heading__copy Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         if notice
-          .notice-banner(role='status')= notice
-        form.comment-form(method='post', action='/comments')
+          .notice-banner.notice-banner--success(role='status')= notice
+        if formError
+          .notice-banner.notice-banner--error(role='alert')= formError
+        form.comment-form(method='post', action='/comments', novalidate)
           .form-field
             label(for='display_name') Name
-            input#display_name(type='text', name='display_name', maxlength='80', placeholder='Jordan from downtown')
+            input#display_name(
+              type='text',
+              name='display_name',
+              maxlength='80',
+              value=formData.display_name,
+              aria-invalid=fieldErrors.display_name ? 'true' : 'false',
+              aria-describedby=fieldErrors.display_name ? 'display_name_error' : false,
+              placeholder='Jordan from downtown'
+            )
+            if fieldErrors.display_name
+              p.form-field__error#display_name_error= fieldErrors.display_name
           .form-field
             label(for='body') Comment
-            textarea#body(name='body', rows='5', maxlength='1000', placeholder='Share a quick note.')
-          button.button.button--primary(type='submit') Send Comment
+            textarea#body(
+              name='body',
+              rows='5',
+              maxlength='1000',
+              aria-invalid=fieldErrors.body ? 'true' : 'false',
+              aria-describedby=fieldErrors.body ? 'body_error' : false,
+              placeholder='Share a quick note.'
+            )= formData.body
+            if fieldErrors.body
+              p.form-field__error#body_error= fieldErrors.body
+          button.button.button--primary.comment-form__submit(type='submit') Send Comment
       .comments-layout__list
         .section-heading.section-heading--left
           p.eyebrow Recent notes
           h2 Customer comments
-        .stack
-          each comment in comments
-            article.comment-card
-              .comment-card__meta
-                h3= comment.name
-                p= comment.date
-              p= comment.body
+          if totalComments > 0
+            p.section-heading__copy Page #{pagination.currentPage} of #{pagination.totalPages}
+        if comments.length
+          .stack
+            each comment in comments
+              article.comment-card
+                .comment-card__meta
+                  h3= comment.name
+                  p= comment.date
+                p= comment.body
+          if pagination.totalPages > 1
+            nav.pagination(aria-label='Comment pages')
+              if pagination.hasPrevious
+                a.button.button--secondary(href=`/comments?page=${pagination.previousPage}`) Previous
+              else
+                span.pagination__spacer
+              p.pagination__summary Page #{pagination.currentPage} of #{pagination.totalPages}
+              if pagination.hasNext
+                a.button.button--secondary(href=`/comments?page=${pagination.nextPage}`) Next
+              else
+                span.pagination__spacer
+        else
+          .message-card
+            h3 No comments yet
+            p Be the first to leave a note for the shop.
+
+block scripts
+  script.
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('.comment-form');
+      if (!form) return;
+      form.addEventListener('submit', function () {
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (!submitButton) return;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+      });
+    });

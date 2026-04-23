@@ -15,18 +15,21 @@ block content
           h2 Built to feel welcoming from the first visit.
         p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         .story-points
-          article.story-point
-            h3 Neighborhood rhythm
+          details.story-point.story-accordion
+            summary
+              h3 Neighborhood rhythm
             p Lorem ipsum dolor sit amet.
-          article.story-point
-            h3 Family pace
+          details.story-point.story-accordion
+            summary
+              h3 Family pace
             p Lorem ipsum dolor sit amet.
       aside.message-card
         h3 Morning to midday
         p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         .story-points
-          article.story-point
-            h3 Store Hours
+          details.story-point.story-accordion
+            summary
+              h3 Store Hours
             p Mon-Sat | 6:00 AM to 2:00 PM
             p Sunday | Closed
 
@@ -37,9 +40,10 @@ block content
         h2 The shape of the story so far.
       .timeline
         each milestone in storyMilestones
-          article.timeline__item
-            p.timeline__year= milestone.year
-            h3= milestone.title
+          details.timeline__item.timeline-accordion
+            summary
+              p.timeline__year= milestone.year
+              h3= milestone.title
             p= milestone.description
 
   section.page-section
@@ -48,8 +52,9 @@ block content
         h2 Company Values
       .card-grid.card-grid--three
         each value in values
-          article.card
-            h3= value.title
+          details.card.value-accordion
+            summary
+              h3= value.title
             p= value.description
 
   section.page-section

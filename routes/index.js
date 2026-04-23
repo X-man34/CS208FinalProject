@@ -1,8 +1,16 @@
 const express = require('express');
+const { query } = require('../bin/db');
 
 const router = express.Router();
 
 const ORDER_URL = 'https://example.com/order-online';
+const COMMENTS_PER_PAGE = 10;
+const MAX_NAME_LENGTH = 80;
+const MAX_BODY_LENGTH = 1000;
+const commentDateFormatter = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long',
+  timeStyle: 'short'
+});
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -95,19 +103,6 @@ const values = [
   }
 ];
 
-const placeholderComments = [
-  {
-    name: 'Morning Regular',
-    date: 'April 18, 2026',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  },
-  {
-    name: 'Weekend Walker',
-    date: 'April 11, 2026',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-  }
-];
-
 function renderPage(res, view, options = {}) {
   res.render(view, {
     navLinks,
@@ -115,6 +110,125 @@ function renderPage(res, view, options = {}) {
     year: new Date().getFullYear(),
     ...options
   });
+}
+
+function normalizePage(rawPage, totalPages = 1) {
+  const parsed = Number.parseInt(rawPage, 10);
+
+  if (!Number.isInteger(parsed) || parsed < 1 || parsed > totalPages) {
+    return 1;
+  }
+
+  return parsed;
+}
+
+function formatCommentDate(value) {
+  return commentDateFormatter.format(new Date(value));
+}
+
+function validateCommentInput(body) {
+  const formData = {
+    display_name: typeof body.display_name === 'string' ? body.display_name.trim() : '',
+    body: typeof body.body === 'string' ? body.body.trim() : ''
+  };
+
+  const fieldErrors = {};
+
+  if (!formData.display_name) {
+    fieldErrors.display_name = 'Enter your name.';
+  } else if (formData.display_name.length > MAX_NAME_LENGTH) {
+    fieldErrors.display_name = `Use ${MAX_NAME_LENGTH} characters or fewer for your name.`;
+  }
+
+  if (!formData.body) {
+    fieldErrors.body = 'Enter a comment before submitting.';
+  } else if (formData.body.length > MAX_BODY_LENGTH) {
+    fieldErrors.body = `Use ${MAX_BODY_LENGTH} characters or fewer for your comment.`;
+  }
+
+  return { formData, fieldErrors };
+}
+
+function buildPagination(currentPage, totalPages) {
+  return {
+    currentPage,
+    totalPages,
+    hasPrevious: currentPage > 1,
+    hasNext: currentPage < totalPages,
+    previousPage: currentPage > 1 ? currentPage - 1 : 1,
+    nextPage: currentPage < totalPages ? currentPage + 1 : totalPages
+  };
+}
+
+async function fetchCommentsPage(rawPage) {
+  const countRows = await query('SELECT COUNT(*) AS total FROM comments');
+  const totalComments = countRows[0]?.total ?? 0;
+  const totalPages = Math.max(1, Math.ceil(totalComments / COMMENTS_PER_PAGE));
+  const currentPage = normalizePage(rawPage, totalPages);
+  const offset = (currentPage - 1) * COMMENTS_PER_PAGE;
+
+  const rows = await query(
+    `SELECT id, display_name, body, created_at
+     FROM comments
+     ORDER BY created_at DESC, id DESC
+     LIMIT ? OFFSET ?`,
+    [COMMENTS_PER_PAGE, offset]
+  );
+
+  return {
+    comments: rows.map((row) => ({
+      id: row.id,
+      name: row.display_name,
+      body: row.body,
+      date: formatCommentDate(row.created_at)
+    })),
+    totalComments,
+    pagination: buildPagination(currentPage, totalPages)
+  };
+}
+
+async function renderCommentsPage(res, options = {}) {
+  const {
+    statusCode = 200,
+    notice = '',
+    formError = '',
+    fieldErrors = {},
+    formData = { display_name: '', body: '' }
+  } = options;
+
+  try {
+    const { comments, totalComments, pagination } = await fetchCommentsPage(options.page);
+
+    res.status(statusCode);
+    renderPage(res, 'comments', {
+      title: 'Customer Comments',
+      pageTitle: 'Customer Comments | Downtown Donuts',
+      currentPath: '/comments',
+      notice,
+      formError,
+      fieldErrors,
+      formData,
+      comments,
+      totalComments,
+      pagination
+    });
+  } catch (error) {
+    console.error('Error loading comments:', error);
+
+    res.status(statusCode === 400 ? 400 : 503);
+    renderPage(res, 'comments', {
+      title: 'Customer Comments',
+      pageTitle: 'Customer Comments | Downtown Donuts',
+      currentPath: '/comments',
+      notice: '',
+      formError: 'Comments are temporarily unavailable. Check the database setup and try again.',
+      fieldErrors,
+      formData,
+      comments: [],
+      totalComments: 0,
+      pagination: buildPagination(1, 1)
+    });
+  }
 }
 
 router.get('/', function (req, res) {
@@ -145,22 +259,46 @@ router.get('/about', function (req, res) {
   });
 });
 
-router.get('/comments', function (req, res) {
-  const notice = req.query.notice === 'preview'
-    ? 'Comments are not saved yet.'
+router.get('/comments', async function (req, res) {
+  const notice = req.query.status === 'posted'
+    ? 'Your comment was posted.'
     : '';
 
-  renderPage(res, 'comments', {
-    title: 'Customer Comments',
-    pageTitle: 'Customer Comments | Downtown Donuts',
-    currentPath: '/comments',
+  await renderCommentsPage(res, {
     notice,
-    comments: placeholderComments
+    page: req.query.page
   });
 });
 
-router.post('/comments', function (req, res) {
-  res.redirect('/comments?notice=preview');
+router.post('/comments', async function (req, res) {
+  const { formData, fieldErrors } = validateCommentInput(req.body);
+
+  if (Object.keys(fieldErrors).length > 0) {
+    await renderCommentsPage(res, {
+      statusCode: 400,
+      formError: 'Fix the highlighted fields and submit again.',
+      fieldErrors,
+      formData
+    });
+    return;
+  }
+
+  try {
+    await query(
+      'INSERT INTO comments (display_name, body) VALUES (?, ?)',
+      [formData.display_name, formData.body]
+    );
+
+    res.redirect('/comments?status=posted');
+  } catch (error) {
+    console.error('Error saving comment:', error);
+
+    await renderCommentsPage(res, {
+      statusCode: 503,
+      formError: 'We could not save your comment right now. Please try again.',
+      formData
+    });
+  }
 });
 
 module.exports = router;

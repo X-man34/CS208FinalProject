@@ -1,16 +1,6 @@
 extends layout
 
 block content
-  section.page-hero
-    .container.container--narrow
-      h1 Downtown Donuts Menu
-      p.page-hero__lede Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      .button-row
-        a.button.button--primary(href=orderUrl target='_blank' rel='noreferrer') Order Online
-        a.button.button--secondary(href='/comments') Read Comments
-
-
-
   each sectionData in menuSections
     section.page-section
       .container

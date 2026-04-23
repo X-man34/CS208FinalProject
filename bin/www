@@ -89,10 +89,11 @@ function onListening() {
 }
 
 function gracefulShutdown() {
-  closeDbConnection();
   console.log('Closing database connection and shutting down server...');
-  server.close(() => {
-    console.log('HTTP server closed');
-    process.exit(0);
+  closeDbConnection().finally(() => {
+    server.close(() => {
+      console.log('HTTP server closed');
+      process.exit(0);
+    });
   });
 }
