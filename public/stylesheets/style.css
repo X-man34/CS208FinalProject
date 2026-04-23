@@ -249,6 +249,7 @@ textarea {
 .mobile-nav__icon {
   display: inline-grid;
   gap: 0.28rem;
+  transition: transform var(--transition);
 }
 
 .mobile-nav__icon span {
@@ -264,6 +265,7 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-white);
+  transform-origin: top center;
 }
 
 .mobile-nav__panel .button--primary {
@@ -274,6 +276,26 @@ textarea {
   display: grid;
   gap: 0.85rem;
   margin-bottom: 1rem;
+}
+
+.mobile-nav[open] .mobile-nav__icon {
+  transform: scale(1.04);
+}
+
+.mobile-nav[open] .mobile-nav__panel {
+  animation: mobile-nav-reveal 180ms ease-out;
+}
+
+@keyframes mobile-nav-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem) scaleY(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
 }
 
 .hero,
