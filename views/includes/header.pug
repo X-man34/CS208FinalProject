@@ -11,7 +11,11 @@ header.site-header
             a(class=currentPath === link.href ? 'is-active' : '', href=link.href)= link.label
     a.button.button--primary.site-header__order(href=orderUrl target='_blank' rel='noreferrer') Order Online
     details.mobile-nav
-      summary.mobile-nav__toggle Menu
+      summary.mobile-nav__toggle(aria-label='Open navigation')
+        span.mobile-nav__icon(aria-hidden='true')
+          span
+          span
+          span
       nav.mobile-nav__panel(aria-label='Mobile')
         ul.mobile-nav__list
           each link in navLinks
