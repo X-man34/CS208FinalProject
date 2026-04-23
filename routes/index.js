@@ -7,6 +7,9 @@ const ORDER_URL = 'https://example.com/order-online';
 const COMMENTS_PER_PAGE = 10;
 const MAX_NAME_LENGTH = 80;
 const MAX_BODY_LENGTH = 1000;
+const MAX_STAR_RATING = 5;
+const DEFAULT_SORT = 'recent';
+const SORT_OPTIONS = new Set(['recent', 'rating_desc', 'rating_asc']);
 const commentDateFormatter = new Intl.DateTimeFormat('en-US', {
   dateStyle: 'long',
   timeStyle: 'short'
@@ -122,14 +125,20 @@ function normalizePage(rawPage, totalPages = 1) {
   return parsed;
 }
 
+function normalizeSort(rawSort) {
+  return SORT_OPTIONS.has(rawSort) ? rawSort : DEFAULT_SORT;
+}
+
 function formatCommentDate(value) {
   return commentDateFormatter.format(new Date(value));
 }
 
 function validateCommentInput(body) {
+  const parsedRating = Number.parseInt(body.star_rating, 10);
   const formData = {
     display_name: typeof body.display_name === 'string' ? body.display_name.trim() : '',
-    body: typeof body.body === 'string' ? body.body.trim() : ''
+    body: typeof body.body === 'string' ? body.body.trim() : '',
+    star_rating: Number.isInteger(parsedRating) ? String(parsedRating) : '5'
   };
 
   const fieldErrors = {};
@@ -146,6 +155,10 @@ function validateCommentInput(body) {
     fieldErrors.body = `Use ${MAX_BODY_LENGTH} characters or fewer for your comment.`;
   }
 
+  if (!Number.isInteger(parsedRating) || parsedRating < 1 || parsedRating > MAX_STAR_RATING) {
+    fieldErrors.star_rating = 'Choose a star rating from 1 to 5.';
+  }
+
   return { formData, fieldErrors };
 }
 
@@ -160,17 +173,51 @@ function buildPagination(currentPage, totalPages) {
   };
 }
 
-async function fetchCommentsPage(rawPage) {
+function buildRatingSummary(rows, totalComments) {
+  const counts = new Map(rows.map((row) => [row.star_rating, row.total]));
+  const maxCount = rows.reduce((max, row) => Math.max(max, row.total), 0);
+  const distribution = [];
+  let weightedTotal = 0;
+
+  for (let rating = MAX_STAR_RATING; rating >= 1; rating -= 1) {
+    const count = counts.get(rating) ?? 0;
+    weightedTotal += rating * count;
+    distribution.push({
+      rating,
+      count,
+      percentage: maxCount > 0 ? (count / maxCount) * 100 : 0
+    });
+  }
+
+  return {
+    averageRating: totalComments > 0 ? (weightedTotal / totalComments).toFixed(1) : '0.0',
+    distribution
+  };
+}
+
+async function fetchCommentsPage(rawPage, rawSort) {
+  const sort = normalizeSort(rawSort);
+  const sortSql = sort === 'rating_asc'
+    ? 'star_rating ASC, created_at DESC, id DESC'
+    : sort === 'rating_desc'
+      ? 'star_rating DESC, created_at DESC, id DESC'
+      : 'created_at DESC, id DESC';
   const countRows = await query('SELECT COUNT(*) AS total FROM comments');
+  const distributionRows = await query(
+    `SELECT star_rating, COUNT(*) AS total
+     FROM comments
+     GROUP BY star_rating
+     ORDER BY star_rating DESC`
+  );
   const totalComments = countRows[0]?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalComments / COMMENTS_PER_PAGE));
   const currentPage = normalizePage(rawPage, totalPages);
   const offset = (currentPage - 1) * COMMENTS_PER_PAGE;
 
   const rows = await query(
-    `SELECT id, display_name, body, created_at
+    `SELECT id, display_name, body, star_rating, created_at
      FROM comments
-     ORDER BY created_at DESC, id DESC
+     ORDER BY ${sortSql}
      LIMIT ? OFFSET ?`,
     [COMMENTS_PER_PAGE, offset]
   );
@@ -180,9 +227,12 @@ async function fetchCommentsPage(rawPage) {
       id: row.id,
       name: row.display_name,
       body: row.body,
-      date: formatCommentDate(row.created_at)
+      date: formatCommentDate(row.created_at),
+      rating: row.star_rating
     })),
     totalComments,
+    sort,
+    ratingSummary: buildRatingSummary(distributionRows, totalComments),
     pagination: buildPagination(currentPage, totalPages)
   };
 }
@@ -193,11 +243,14 @@ async function renderCommentsPage(res, options = {}) {
     notice = '',
     formError = '',
     fieldErrors = {},
-    formData = { display_name: '', body: '' }
+    formData = { display_name: '', body: '', star_rating: '5' }
   } = options;
 
   try {
-    const { comments, totalComments, pagination } = await fetchCommentsPage(options.page);
+    const { comments, totalComments, pagination, sort, ratingSummary } = await fetchCommentsPage(
+      options.page,
+      options.sort
+    );
 
     res.status(statusCode);
     renderPage(res, 'comments', {
@@ -210,6 +263,8 @@ async function renderCommentsPage(res, options = {}) {
       formData,
       comments,
       totalComments,
+      sort,
+      ratingSummary,
       pagination
     });
   } catch (error) {
@@ -226,6 +281,8 @@ async function renderCommentsPage(res, options = {}) {
       formData,
       comments: [],
       totalComments: 0,
+      sort: normalizeSort(options.sort),
+      ratingSummary: buildRatingSummary([], 0),
       pagination: buildPagination(1, 1)
     });
   }
@@ -266,7 +323,8 @@ router.get('/comments', async function (req, res) {
 
   await renderCommentsPage(res, {
     notice,
-    page: req.query.page
+    page: req.query.page,
+    sort: req.query.sort
   });
 });
 
@@ -278,25 +336,27 @@ router.post('/comments', async function (req, res) {
       statusCode: 400,
       formError: 'Fix the highlighted fields and submit again.',
       fieldErrors,
-      formData
+      formData,
+      sort: req.query.sort
     });
     return;
   }
 
   try {
     await query(
-      'INSERT INTO comments (display_name, body) VALUES (?, ?)',
-      [formData.display_name, formData.body]
+      'INSERT INTO comments (display_name, body, star_rating) VALUES (?, ?, ?)',
+      [formData.display_name, formData.body, Number.parseInt(formData.star_rating, 10)]
     );
 
-    res.redirect('/comments?status=posted');
+    res.redirect(`/comments?status=posted&sort=${normalizeSort(req.query.sort)}`);
   } catch (error) {
     console.error('Error saving comment:', error);
 
     await renderCommentsPage(res, {
       statusCode: 503,
       formError: 'We could not save your comment right now. Please try again.',
-      formData
+      formData,
+      sort: req.query.sort
     });
   }
 });

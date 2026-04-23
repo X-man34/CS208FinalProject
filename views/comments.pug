@@ -18,7 +18,7 @@ block content
           .notice-banner.notice-banner--success(role='status')= notice
         if formError
           .notice-banner.notice-banner--error(role='alert')= formError
-        form.comment-form(method='post', action='/comments', novalidate)
+        form.comment-form(method='post', action=`/comments?sort=${sort}`, novalidate)
           .form-field
             label(for='display_name') Name
             input#display_name(
@@ -44,29 +44,81 @@ block content
             )= formData.body
             if fieldErrors.body
               p.form-field__error#body_error= fieldErrors.body
+          .form-field
+            label(for='star_rating_5') Overall rating
+            .rating-picker
+              .rating-picker__scale(role='radiogroup', aria-label='Star rating')
+                each rating in [5, 4, 3, 2, 1]
+                  input.rating-picker__input(
+                    id=`star_rating_${rating}`,
+                    type='radio',
+                    name='star_rating',
+                    value=rating,
+                    checked=formData.star_rating === String(rating),
+                    aria-invalid=fieldErrors.star_rating ? 'true' : 'false'
+                  )
+                  label.rating-picker__star(for=`star_rating_${rating}`)
+                    span.sr-only= `${rating} star${rating === 1 ? '' : 's'}`
+            if fieldErrors.star_rating
+              p.form-field__error= fieldErrors.star_rating
           button.button.button--primary.comment-form__submit(type='submit') Send Comment
       .comments-layout__list
         .section-heading.section-heading--left
           h2 Customer comments
           if totalComments > 0
             p.section-heading__copy Page #{pagination.currentPage} of #{pagination.totalPages}
+        .reviews-overview
+          .reviews-overview__summary
+            p.eyebrow Review Summary
+            h3= `${ratingSummary.averageRating} / 5`
+            p.reviews-overview__meta= `${totalComments} review${totalComments === 1 ? '' : 's'}`
+          .reviews-graph
+            each row in ratingSummary.distribution
+              .reviews-graph__row
+                span.reviews-graph__label= `${row.rating} stars`
+                .reviews-graph__bar
+                  span.reviews-graph__fill(style=`width:${row.percentage}%`)
+                span.reviews-graph__count= row.count
+        .comments-toolbar
+          form.comments-toolbar__sort(method='get', action='/comments')
+            label(for='sort') Sort reviews
+            select#sort(name='sort', onchange='this.form.submit()')
+              option(value='recent', selected=sort === 'recent') Most recent
+              option(value='rating_desc', selected=sort === 'rating_desc') Highest rating first
+              option(value='rating_asc', selected=sort === 'rating_asc') Lowest rating first
         if comments.length
           .stack
             each comment in comments
               article.comment-card
                 .comment-card__meta
-                  h3= comment.name
+                  .comment-card__header
+                    p.comment-card__stars(aria-label=`${comment.rating} out of 5 stars`)
+                      each star in [1, 2, 3, 4, 5]
+                        span(class=star <= comment.rating ? 'is-filled' : 'is-empty')
+                    h3= comment.name
                   p= comment.date
                 p= comment.body
           if pagination.totalPages > 1
             nav.pagination(aria-label='Comment pages')
               if pagination.hasPrevious
-                a.button.button--secondary(href=`/comments?page=${pagination.previousPage}`) Previous
+                a.button.button--secondary(href=`/comments?page=${pagination.previousPage}&sort=${sort}`) Previous
               else
                 span.pagination__spacer
-              p.pagination__summary Page #{pagination.currentPage} of #{pagination.totalPages}
+              .pagination__center
+                p.pagination__summary Page #{pagination.currentPage} of #{pagination.totalPages}
+                form.pagination__jump(method='get', action='/comments')
+                  input(type='hidden', name='sort', value=sort)
+                  label.pagination__label(for='page') Go to page
+                  input#page.pagination__input(
+                    type='number',
+                    name='page',
+                    min='1',
+                    max=pagination.totalPages,
+                    value=pagination.currentPage
+                  )
+                  button.button.button--secondary.pagination__button(type='submit') Go
               if pagination.hasNext
-                a.button.button--secondary(href=`/comments?page=${pagination.nextPage}`) Next
+                a.button.button--secondary(href=`/comments?page=${pagination.nextPage}&sort=${sort}`) Next
               else
                 span.pagination__spacer
         else

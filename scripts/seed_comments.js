@@ -3,10 +3,15 @@ const mysql = require('mysql2/promise');
 const DEFAULT_COUNT = 1000;
 const BATCH_SIZE = 100;
 
+function randomStarRating() {
+  return Math.floor(Math.random() * 5) + 1;
+}
+
 function buildComment(index) {
   return [
     `Seed User ${index + 1}`,
-    `Seeded comment ${index + 1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
+    `Seeded comment ${index + 1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+    randomStarRating()
   ];
 }
 
@@ -32,12 +37,12 @@ async function main() {
       const placeholders = [];
 
       for (let i = 0; i < batchCount; i += 1) {
-        placeholders.push('(?, ?)');
+        placeholders.push('(?, ?, ?)');
         values.push(...buildComment(offset + i));
       }
 
       await connection.query(
-        `INSERT INTO comments (display_name, body) VALUES ${placeholders.join(', ')}`,
+        `INSERT INTO comments (display_name, body, star_rating) VALUES ${placeholders.join(', ')}`,
         values
       );
     }
