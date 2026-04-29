@@ -7,7 +7,7 @@
 ## Site link
 Just for fun I set this up to be hosted on netlify with my other sites. 
 https://cs208finalproject.netlify.app/
-Since the hosting is free I can't run the backend so to test the comments you will need to built it yourself. 
+Since the hosting is free I can't run the backend so to test the comments you will need to build it yourself. 
 
 ## Project Description
 
