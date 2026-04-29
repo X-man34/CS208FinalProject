@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder coffee image</title>
+  <desc id="desc">Simple illustration of a takeaway coffee cup used as a placeholder image.</desc>
+  <rect width="480" height="360" fill="#f7f4ed"/>
+  <rect x="173" y="94" width="134" height="168" rx="10" fill="#10291d"/>
+  <rect x="161" y="79" width="158" height="28" rx="8" fill="#f1e5d1"/>
+  <rect x="170" y="63" width="140" height="18" rx="8" fill="#ffffff"/>
+  <rect x="201" y="138" width="78" height="72" rx="8" fill="#f7c64a"/>
+  <path d="M221 138v72M259 138v72M201 174h78" stroke="#10291d" stroke-width="5"/>
+  <path d="M182 261h116l-14 34h-88z" fill="#c88f58"/>
+  <text x="240" y="324" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="22" fill="#10291d">Placeholder Coffee</text>
+</svg>

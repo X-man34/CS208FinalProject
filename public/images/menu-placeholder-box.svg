@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder pastry box image</title>
+  <desc id="desc">Simple illustration of a pastry box used as a placeholder image.</desc>
+  <rect width="480" height="360" fill="#f8f5ef"/>
+  <path d="M122 122h236l42 44H164z" fill="#ead9bf"/>
+  <rect x="122" y="166" width="236" height="118" fill="#f1e5d1"/>
+  <path d="M164 166h236v118H164z" fill="#e6d3b2"/>
+  <path d="M214 122h54l25 44h-54z" fill="#f7c64a"/>
+  <path d="M217 200h126" stroke="#10291d" stroke-width="6" stroke-linecap="round"/>
+  <path d="M217 228h92" stroke="#10291d" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="356" cy="226" r="24" fill="#10291d"/>
+  <circle cx="356" cy="226" r="10" fill="#f7c64a"/>
+  <text x="240" y="324" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="22" fill="#10291d">Placeholder Featured Item</text>
+</svg>

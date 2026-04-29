@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-labelledby="title desc">
+  <title id="title">Placeholder donut image</title>
+  <desc id="desc">Simple illustration of a frosted donut used as a placeholder image.</desc>
+  <rect width="480" height="360" fill="#f8f3ea"/>
+  <circle cx="240" cy="180" r="118" fill="#d7894a"/>
+  <circle cx="240" cy="180" r="62" fill="#f8f3ea"/>
+  <path d="M138 165c10-48 46-88 102-92 51-4 104 25 119 84-18 16-42 26-69 29-46 5-103-2-152-21z" fill="#f3a8ba"/>
+  <circle cx="158" cy="128" r="7" fill="#f7c64a"/>
+  <circle cx="304" cy="118" r="7" fill="#7db08a"/>
+  <circle cx="191" cy="104" r="7" fill="#ffffff"/>
+  <circle cx="327" cy="155" r="7" fill="#d96d6d"/>
+  <circle cx="147" cy="180" r="7" fill="#ffffff"/>
+  <circle cx="294" cy="92" r="7" fill="#f7c64a"/>
+  <circle cx="196" cy="211" r="7" fill="#7db08a"/>
+  <circle cx="337" cy="197" r="7" fill="#ffffff"/>
+  <text x="240" y="318" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="22" fill="#10291d">Placeholder Donut</text>
+</svg>

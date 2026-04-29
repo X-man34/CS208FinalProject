@@ -48,27 +48,72 @@ const menuSections = [
     title: 'Donuts',
     intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     items: [
-      { name: 'Classic Glazed', detail: 'Lorem ipsum dolor sit amet.' },
-      { name: 'Berry Sprinkle', detail: 'Lorem ipsum dolor sit amet.' },
-      { name: 'Espresso Twist', detail: 'Lorem ipsum dolor sit amet.' }
+      {
+        name: 'Classic Glazed',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-donut.svg',
+        alt: 'Placeholder illustration of a glazed donut'
+      },
+      {
+        name: 'Berry Sprinkle',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-donut.svg',
+        alt: 'Placeholder illustration of a sprinkled donut'
+      },
+      {
+        name: 'Espresso Twist',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-donut.svg',
+        alt: 'Placeholder illustration of a twisted pastry'
+      }
     ]
   },
   {
     title: 'Coffee',
     intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     items: [
-      { name: 'House Roast', detail: 'Lorem ipsum dolor sit amet.' },
-      { name: 'Honey Latte', detail: 'Lorem ipsum dolor sit amet.' },
-      { name: 'Cold Brew', detail: 'Lorem ipsum dolor sit amet.' }
+      {
+        name: 'House Roast',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-coffee.svg',
+        alt: 'Placeholder illustration of a coffee cup'
+      },
+      {
+        name: 'Honey Latte',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-coffee.svg',
+        alt: 'Placeholder illustration of a latte cup'
+      },
+      {
+        name: 'Cold Brew',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-coffee.svg',
+        alt: 'Placeholder illustration of a cold coffee drink'
+      }
     ]
   },
   {
     title: 'Featured',
     intro: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     items: [
-      { name: 'Weekend Box', detail: 'Lorem ipsum dolor sit amet.' },
-      { name: 'Downtown Dozen', detail: 'Lorem ipsum dolor sit amet.' },
-      { name: 'Office Coffee Run', detail: 'Lorem ipsum dolor sit amet.' }
+      {
+        name: 'Weekend Box',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-box.svg',
+        alt: 'Placeholder illustration of a pastry box'
+      },
+      {
+        name: 'Downtown Dozen',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-box.svg',
+        alt: 'Placeholder illustration of a donut dozen box'
+      },
+      {
+        name: 'Office Coffee Run',
+        detail: 'Lorem ipsum dolor sit amet.',
+        image: '/images/menu-placeholder-box.svg',
+        alt: 'Placeholder illustration of a takeout carrier'
+      }
     ]
   }
 ];

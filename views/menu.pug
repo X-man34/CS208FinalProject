@@ -12,6 +12,7 @@ block content
           .card-grid.card-grid--three
             each item in sectionData.items
               article.card.card--menu
+                img.menu-card__image(src=item.image, alt=item.alt)
                 h3= item.name
                 p= item.detail
                 a.inline-link(href=orderUrl target='_blank' rel='noreferrer') Ordering placeholder
