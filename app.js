@@ -5,6 +5,7 @@ const createError = require('http-errors');
 const indexRouter = require('./routes/index');
 
 const app = express();
+const projectRoot = process.cwd();
 const orderUrl = 'https://example.com/order-online';
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -14,12 +15,12 @@ const navLinks = [
 ];
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(projectRoot, 'views'));
 app.set('view engine', 'pug');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(projectRoot, 'public')));
 app.use(function (req, res, next) {
   res.locals.navLinks = navLinks;
   res.locals.orderUrl = orderUrl;
