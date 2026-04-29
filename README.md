@@ -4,6 +4,11 @@
 - GitHub Repo: [https://github.com/X-man34/CS208FinalProject](https://github.com/X-man34/CS208FinalProject)
 - Term: Spring 2026
 
+## Site link
+Just for fun I set this up to be hosted on netlify with my other sites. 
+https://cs208finalproject.netlify.app/
+Since the hosting is free I can't run the backend so to test the comments you will need to built it yourself. 
+
 ## Project Description
 
 This project is a full-stack prototype website for Downtown Donuts, a family-owned
